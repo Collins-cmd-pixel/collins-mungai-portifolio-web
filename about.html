@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>About — Collins Mungai</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0a0a0f; --surface: #13131a; --accent: #e8ff4d; --accent2: #4dffd4;
+    --text: #f0f0f0; --muted: #888; --border: rgba(255,255,255,0.07);
+  }
+  [data-theme="light"] { --bg:#f5f5f0; --surface:#ebebE4; --text:#111; --muted:#666; --border:rgba(0,0,0,0.08); }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 5vw;background:rgba(10,10,15,0.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;color:var(--accent);letter-spacing:-0.03em;}
+  .nav-links{display:flex;gap:2rem;list-style:none;}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:0.9rem;font-weight:500;transition:color 0.2s;}
+  .nav-links a:hover{color:var(--text);}
+  .nav-links a.active{color:var(--accent);}
+  .theme-toggle{background:none;border:1px solid var(--border);color:var(--text);padding:0.4rem 0.8rem;border-radius:20px;cursor:pointer;font-size:0.8rem;transition:all 0.2s;}
+  .theme-toggle:hover{border-color:var(--accent);color:var(--accent);}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+  .hamburger span{width:24px;height:2px;background:var(--text);}
+  @media(max-width:768px){.nav-links{display:none;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:var(--surface);padding:1rem 5vw;border-top:1px solid var(--border);}.nav-links.open{display:flex;}.hamburger{display:flex;}}
+
+  .page-hero{padding:9rem 5vw 5rem;max-width:1200px;margin:auto;}
+  .section-tag{display:inline-block;background:rgba(232,255,77,0.08);border:1px solid rgba(232,255,77,0.2);color:var(--accent);padding:0.3rem 0.8rem;border-radius:20px;font-size:0.8rem;margin-bottom:1rem;}
+  h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.5rem,5vw,4rem);letter-spacing:-0.04em;line-height:1.05;}
+  .lead{font-size:1.1rem;color:var(--muted);line-height:1.8;max-width:600px;margin-top:1rem;}
+
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;padding:4rem 5vw;max-width:1200px;margin:auto;}
+  .about-text p{color:var(--muted);line-height:1.9;margin-bottom:1.2rem;font-size:0.97rem;}
+  .about-text h2{font-family:'Syne',sans-serif;font-weight:700;font-size:1.5rem;margin-bottom:1rem;letter-spacing:-0.02em;}
+  .highlight-text{color:var(--accent)!important;font-weight:500;}
+
+  .philosophy-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem;margin-top:2rem;border-left:3px solid var(--accent);}
+  .philosophy-card h3{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:0.8rem;color:var(--accent);}
+  .philosophy-card p{color:var(--muted);line-height:1.7;font-size:0.93rem;}
+
+  .info-cards{display:flex;flex-direction:column;gap:1.2rem;}
+  .info-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:border-color 0.2s,transform 0.2s;}
+  .info-card:hover{border-color:var(--accent);transform:translateX(6px);}
+  .info-card-label{font-size:0.75rem;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem;}
+  .info-card-value{font-family:'Syne',sans-serif;font-weight:700;font-size:1.2rem;margin-bottom:0.3rem;}
+  .info-card-sub{font-size:0.85rem;color:var(--muted);}
+
+  .what-diff{padding:4rem 5vw;max-width:1200px;margin:auto;}
+  .what-diff h2{font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;letter-spacing:-0.03em;margin-bottom:2.5rem;}
+  .diff-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;}
+  .diff-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem;transition:all 0.2s;}
+  .diff-card:hover{border-color:var(--accent2);transform:translateY(-4px);}
+  .diff-icon{font-size:2rem;margin-bottom:1rem;}
+  .diff-card h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:0.5rem;}
+  .diff-card p{color:var(--muted);font-size:0.88rem;line-height:1.6;}
+
+  .tech-stack{padding:0 5vw 5rem;max-width:1200px;margin:auto;}
+  .tech-stack h2{font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;letter-spacing:-0.03em;margin-bottom:2rem;}
+  .stack-tags{display:flex;flex-wrap:wrap;gap:0.8rem;}
+  .stack-tag{background:var(--surface);border:1px solid var(--border);padding:0.5rem 1.2rem;border-radius:30px;font-size:0.85rem;color:var(--text);transition:all 0.2s;cursor:default;}
+  .stack-tag:hover{border-color:var(--accent);color:var(--accent);}
+
+  .bg-orb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;}
+  .orb1{width:600px;height:600px;background:rgba(232,255,77,0.04);top:-200px;right:-200px;}
+  .orb2{width:400px;height:400px;background:rgba(77,255,212,0.04);bottom:-100px;left:-100px;}
+
+  @media(max-width:768px){.about-grid{grid-template-columns:1fr;gap:3rem;}.diff-grid{grid-template-columns:1fr 1fr;}}
+  @media(max-width:480px){.diff-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="bg-orb orb1"></div>
+<div class="bg-orb orb2"></div>
+<nav>
+  <div class="logo">CM.</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="testimonials.html">Reviews</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div style="display:flex;gap:1rem;align-items:center">
+    <button class="theme-toggle" onclick="toggleTheme()">☀ Light</button>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="section-tag">About Me</div>
+  <h1>The person behind<br>the pixels</h1>
+  <p class="lead">A creative technologist bridging the gap between clean code and compelling visuals.</p>
+</div>
+
+<div class="about-grid">
+  <div class="about-text">
+    <h2>Hey, I'm Collins 👋</h2>
+    <p>I'm a <span class="highlight-text">Front-End Developer and Graphics Designer</span> based in Nairobi, Kenya. I specialize in crafting digital experiences that are not only functional but genuinely beautiful — because I believe great design and great code are inseparable.</p>
+    <p>My journey started with a passion for how things look, which naturally evolved into understanding how they <em>work</em>. Today I sit at that intersection — turning design ideas into living, breathing interfaces that users love to interact with.</p>
+    <p>I specialize in <span class="highlight-text">responsive web development, UI/UX design, and brand identity creation</span>. Whether it's building a pixel-perfect landing page or crafting a brand's visual language from scratch, I bring the same level of craft and care to every project.</p>
+    <div class="philosophy-card">
+      <h3>My Design Philosophy</h3>
+      <p>"Design is not just what it looks like — design is how it works." I combine aesthetics with function, ensuring every pixel serves a purpose and every interaction feels intuitive.</p>
+    </div>
+  </div>
+  <div class="info-cards">
+    <div class="info-card">
+      <div class="info-card-label">Experience</div>
+      <div class="info-card-value">3+ Years</div>
+      <div class="info-card-sub">Building web experiences & design assets</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">Specialization</div>
+      <div class="info-card-value">Front-End + Design</div>
+      <div class="info-card-sub">HTML, CSS, JS, React · Figma, Adobe Suite</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">Focus Areas</div>
+      <div class="info-card-value">UI/UX & Branding</div>
+      <div class="info-card-sub">Responsive design, animation, identity systems</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">Based In</div>
+      <div class="info-card-value">Nairobi, Kenya 🇰🇪</div>
+      <div class="info-card-sub">Available for remote & on-site work</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">Projects Completed</div>
+      <div class="info-card-value">40+</div>
+      <div class="info-card-sub">Websites, apps, logos, full brand identities</div>
+    </div>
+  </div>
+</div>
+
+<div class="what-diff">
+  <h2>What makes me different</h2>
+  <div class="diff-grid">
+    <div class="diff-card">
+      <div class="diff-icon">🎯</div>
+      <h3>Dual Expertise</h3>
+      <p>I code AND I design. No miscommunication between developer and designer — that's me in one person.</p>
+    </div>
+    <div class="diff-card">
+      <div class="diff-icon">⚡</div>
+      <h3>Speed & Quality</h3>
+      <p>I deliver fast without cutting corners. Clean code, optimized assets, and pixel-perfect execution every time.</p>
+    </div>
+    <div class="diff-card">
+      <div class="diff-icon">📱</div>
+      <h3>Mobile-First Always</h3>
+      <p>Every project starts with mobile in mind. Responsive isn't a bonus — it's the baseline.</p>
+    </div>
+    <div class="diff-card">
+      <div class="diff-icon">🧠</div>
+      <h3>Problem Solver</h3>
+      <p>I don't just execute tasks. I think about goals, user needs, and the best solution for the actual problem.</p>
+    </div>
+  </div>
+</div>
+
+<div class="tech-stack">
+  <h2>My toolkit</h2>
+  <div class="stack-tags">
+    <span class="stack-tag">HTML5</span>
+    <span class="stack-tag">CSS3</span>
+    <span class="stack-tag">JavaScript</span>
+    <span class="stack-tag">React</span>
+    <span class="stack-tag">Tailwind CSS</span>
+    <span class="stack-tag">Bootstrap</span>
+    <span class="stack-tag">Git & GitHub</span>
+    <span class="stack-tag">Figma</span>
+    <span class="stack-tag">Adobe Photoshop</span>
+    <span class="stack-tag">Adobe Illustrator</span>
+    <span class="stack-tag">REST APIs</span>
+    <span class="stack-tag">Responsive Design</span>
+    <span class="stack-tag">UI/UX Design</span>
+    <span class="stack-tag">Branding</span>
+    <span class="stack-tag">Typography</span>
+    <span class="stack-tag">Color Theory</span>
+  </div>
+</div>
+
+<script>
+  function toggleTheme(){const b=document.body,btn=document.querySelector('.theme-toggle');if(b.dataset.theme==='light'){delete b.dataset.theme;btn.textContent='☀ Light';}else{b.dataset.theme='light';btn.textContent='🌙 Dark';}}
+  function toggleMenu(){document.getElementById('navLinks').classList.toggle('open');}
+</script>
+</body>
+</html>
