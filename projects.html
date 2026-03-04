@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Projects — Collins Mungai</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root{--bg:#0a0a0f;--surface:#13131a;--accent:#e8ff4d;--accent2:#4dffd4;--text:#f0f0f0;--muted:#888;--border:rgba(255,255,255,0.07);}
+  [data-theme="light"]{--bg:#f5f5f0;--surface:#ebebE4;--text:#111;--muted:#666;--border:rgba(0,0,0,0.08);}
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 5vw;background:rgba(10,10,15,0.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;color:var(--accent);}
+  .nav-links{display:flex;gap:2rem;list-style:none;}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:0.9rem;font-weight:500;transition:color 0.2s;}
+  .nav-links a:hover{color:var(--text);}.nav-links a.active{color:var(--accent);}
+  .theme-toggle{background:none;border:1px solid var(--border);color:var(--text);padding:0.4rem 0.8rem;border-radius:20px;cursor:pointer;font-size:0.8rem;}
+  .theme-toggle:hover{border-color:var(--accent);color:var(--accent);}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+  .hamburger span{width:24px;height:2px;background:var(--text);}
+  @media(max-width:768px){.nav-links{display:none;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:var(--surface);padding:1rem 5vw;border-top:1px solid var(--border);}.nav-links.open{display:flex;}.hamburger{display:flex;}}
+
+  .page-wrapper{padding:9rem 5vw 6rem;max-width:1200px;margin:auto;}
+  .section-tag{display:inline-block;background:rgba(232,255,77,0.08);border:1px solid rgba(232,255,77,0.2);color:var(--accent);padding:0.3rem 0.8rem;border-radius:20px;font-size:0.8rem;margin-bottom:1rem;}
+  h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.5rem,5vw,4rem);letter-spacing:-0.04em;line-height:1.05;margin-bottom:0.8rem;}
+  .lead{color:var(--muted);font-size:1.05rem;line-height:1.7;max-width:560px;margin-bottom:3rem;}
+
+  /* FILTERS */
+  .filter-bar{display:flex;gap:0.7rem;margin-bottom:3rem;flex-wrap:wrap;}
+  .filter-btn{padding:0.5rem 1.2rem;border-radius:30px;border:1px solid var(--border);background:none;color:var(--muted);cursor:pointer;font-size:0.85rem;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+  .filter-btn.active,.filter-btn:hover{border-color:var(--accent);color:var(--accent);}
+  .filter-btn.active{background:rgba(232,255,77,0.08);}
+
+  /* PROJECTS GRID */
+  .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:2rem;}
+  .project-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:all 0.3s;position:relative;}
+  .project-card:hover{transform:translateY(-6px);border-color:rgba(232,255,77,0.3);box-shadow:0 16px 48px rgba(232,255,77,0.08);}
+  .project-thumb{height:200px;display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;overflow:hidden;}
+  .project-thumb::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 60%,var(--surface));}
+  .project-type{position:absolute;top:1rem;left:1rem;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);padding:0.3rem 0.8rem;border-radius:20px;font-size:0.75rem;color:var(--accent);font-weight:600;z-index:2;}
+  .project-body{padding:1.5rem;}
+  .project-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:0.5rem;letter-spacing:-0.02em;}
+  .project-desc{color:var(--muted);font-size:0.88rem;line-height:1.6;margin-bottom:1.2rem;}
+  .project-tags{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.5rem;}
+  .project-tag{background:rgba(77,255,212,0.06);border:1px solid rgba(77,255,212,0.15);color:var(--accent2);padding:0.2rem 0.7rem;border-radius:20px;font-size:0.75rem;}
+  .project-links{display:flex;gap:0.8rem;}
+  .project-link{display:inline-flex;align-items:center;gap:0.4rem;padding:0.55rem 1.1rem;border-radius:8px;font-size:0.82rem;font-weight:600;text-decoration:none;transition:all 0.2s;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;}
+  .project-link.demo{background:var(--accent);color:#0a0a0f;}
+  .project-link.demo:hover{background:#d4e840;transform:translateY(-1px);}
+  .project-link.github{background:transparent;color:var(--text);border:1px solid var(--border);}
+  .project-link.github:hover{border-color:var(--accent);color:var(--accent);}
+
+  /* FEATURED - CASE STUDY */
+  .featured-case{background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:3rem;display:grid;grid-template-columns:1fr 1fr;transition:border-color 0.3s;}
+  .featured-case:hover{border-color:rgba(232,255,77,0.3);}
+  .case-visual{height:100%;min-height:320px;display:flex;align-items:center;justify-content:center;font-size:6rem;background:linear-gradient(135deg,rgba(232,255,77,0.05),rgba(77,255,212,0.05));}
+  .case-content{padding:2.5rem;}
+  .case-badge{display:inline-block;background:rgba(232,255,77,0.08);border:1px solid rgba(232,255,77,0.2);color:var(--accent);padding:0.3rem 0.8rem;border-radius:20px;font-size:0.75rem;font-weight:600;margin-bottom:1.2rem;}
+  .case-content h2{font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;letter-spacing:-0.03em;margin-bottom:0.8rem;}
+  .case-meta{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0;}
+  .case-meta-item label{font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:0.2rem;}
+  .case-meta-item span{font-size:0.9rem;font-weight:500;}
+
+  .bg-orb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;}
+  .orb1{width:600px;height:600px;background:rgba(232,255,77,0.04);top:-200px;right:-200px;}
+  .orb2{width:400px;height:400px;background:rgba(77,255,212,0.04);bottom:-100px;left:-100px;}
+
+  @media(max-width:768px){.featured-case{grid-template-columns:1fr;}.case-visual{min-height:200px;}}
+  @media(max-width:480px){.projects-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="bg-orb orb1"></div>
+<div class="bg-orb orb2"></div>
+<nav>
+  <div class="logo">CM.</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="projects.html" class="active">Projects</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="testimonials.html">Reviews</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div style="display:flex;gap:1rem;align-items:center">
+    <button class="theme-toggle" onclick="toggleTheme()">☀ Light</button>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+  <div class="section-tag">Portfolio</div>
+  <h1>Projects that<br>speak for me</h1>
+  <p class="lead">A selection of work across web development, JavaScript applications, and UI design.</p>
+
+  <!-- FEATURED CASE STUDY -->
+  <div class="featured-case">
+    <div class="case-visual">🛍</div>
+    <div class="case-content">
+      <div class="case-badge">✦ Featured Case Study</div>
+      <h2>ShopEase — E-Commerce Platform</h2>
+      <p style="color:var(--muted);font-size:0.9rem;line-height:1.7">A full e-commerce website built from scratch — product listings, cart functionality, user authentication flow, and a responsive checkout experience.</p>
+      <div class="case-meta">
+        <div class="case-meta-item"><label>Problem</label><span>Outdated, non-mobile shopping experience</span></div>
+        <div class="case-meta-item"><label>Solution</label><span>Mobile-first React rebuild + new UI system</span></div>
+        <div class="case-meta-item"><label>Result</label><span>+60% mobile engagement</span></div>
+        <div class="case-meta-item"><label>Stack</label><span>React, Tailwind, Node.js</span></div>
+      </div>
+      <div style="display:flex;gap:0.8rem;flex-wrap:wrap">
+        <a href="#" class="project-link demo">Live Demo ↗</a>
+        <a href="#" class="project-link github">GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTER -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterProjects('all',this)">All</button>
+    <button class="filter-btn" onclick="filterProjects('web',this)">Web</button>
+    <button class="filter-btn" onclick="filterProjects('app',this)">JS App</button>
+    <button class="filter-btn" onclick="filterProjects('ui',this)">UI Design</button>
+    <button class="filter-btn" onclick="filterProjects('landing',this)">Landing Page</button>
+  </div>
+
+  <div class="projects-grid" id="projectsGrid">
+    <div class="project-card" data-type="landing">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#1a1a2e,#16213e)">🚀<div class="project-type">Landing Page</div></div>
+      <div class="project-body">
+        <div class="project-name">SkyLaunch — SaaS Landing</div>
+        <div class="project-desc">A high-converting SaaS landing page with animated hero, pricing table, feature showcase and responsive CTA sections.</div>
+        <div class="project-tags"><span class="project-tag">HTML</span><span class="project-tag">CSS</span><span class="project-tag">JS</span><span class="project-tag">Animations</span></div>
+        <div class="project-links"><a href="#" class="project-link demo">Demo ↗</a><a href="#" class="project-link github">GitHub</a></div>
+      </div>
+    </div>
+    <div class="project-card" data-type="app">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#0f2027,#203a43)">🌦<div class="project-type">JS App</div></div>
+      <div class="project-body">
+        <div class="project-name">WeatherNow App</div>
+        <div class="project-desc">A weather application using OpenWeatherMap API with real-time forecasts, animated weather icons, and city search.</div>
+        <div class="project-tags"><span class="project-tag">JavaScript</span><span class="project-tag">REST API</span><span class="project-tag">CSS3</span></div>
+        <div class="project-links"><a href="#" class="project-link demo">Demo ↗</a><a href="#" class="project-link github">GitHub</a></div>
+      </div>
+    </div>
+    <div class="project-card" data-type="ui">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#1a0533,#2d1b69)">📱<div class="project-type">UI Design</div></div>
+      <div class="project-body">
+        <div class="project-name">Fintech Mobile App UI</div>
+        <div class="project-desc">A complete mobile banking app UI kit with dashboard, transactions, analytics and settings screens designed in Figma.</div>
+        <div class="project-tags"><span class="project-tag">Figma</span><span class="project-tag">UI/UX</span><span class="project-tag">Mobile</span></div>
+        <div class="project-links"><a href="#" class="project-link demo">Figma ↗</a><a href="#" class="project-link github">GitHub</a></div>
+      </div>
+    </div>
+    <div class="project-card" data-type="web">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#0d2137,#1e4d5e)">🍽<div class="project-type">Full Website</div></div>
+      <div class="project-body">
+        <div class="project-name">Savour Restaurant Website</div>
+        <div class="project-desc">Multi-page restaurant website with online menu, reservation system UI, gallery section, and mobile-first layout.</div>
+        <div class="project-tags"><span class="project-tag">HTML5</span><span class="project-tag">CSS3</span><span class="project-tag">JavaScript</span><span class="project-tag">Responsive</span></div>
+        <div class="project-links"><a href="#" class="project-link demo">Demo ↗</a><a href="#" class="project-link github">GitHub</a></div>
+      </div>
+    </div>
+    <div class="project-card" data-type="app">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#1f0a2e,#3a0a5e)">✅<div class="project-type">JS App</div></div>
+      <div class="project-body">
+        <div class="project-name">TaskFlow — Productivity App</div>
+        <div class="project-desc">A Kanban-style task manager with drag-and-drop, local storage persistence, dark/light mode, and smooth animations.</div>
+        <div class="project-tags"><span class="project-tag">React</span><span class="project-tag">Tailwind</span><span class="project-tag">LocalStorage</span></div>
+        <div class="project-links"><a href="#" class="project-link demo">Demo ↗</a><a href="#" class="project-link github">GitHub</a></div>
+      </div>
+    </div>
+    <div class="project-card" data-type="ui">
+      <div class="project-thumb" style="background:linear-gradient(135deg,#071a27,#0e3a4f)">🎓<div class="project-type">UI Design</div></div>
+      <div class="project-body">
+        <div class="project-name">EduFlow — LMS Dashboard</div>
+        <div class="project-desc">A learning management system dashboard UI with course progress, student analytics, and content management views.</div>
+        <div class="project-tags"><span class="project-tag">Figma</span><span class="project-tag">Dashboard</span><span class="project-tag">UX Research</span></div>
+        <div class="project-links"><a href="#" class="project-link demo">Figma ↗</a><a href="#" class="project-link github">GitHub</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function filterProjects(type, el) {
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    el.classList.add('active');
+    document.querySelectorAll('.project-card').forEach(card=>{
+      if(type==='all'||card.dataset.type===type){card.style.display='block';}
+      else{card.style.display='none';}
+    });
+  }
+  function toggleTheme(){const b=document.body,btn=document.querySelector('.theme-toggle');if(b.dataset.theme==='light'){delete b.dataset.theme;btn.textContent='☀ Light';}else{b.dataset.theme='light';btn.textContent='🌙 Dark';}}
+  function toggleMenu(){document.getElementById('navLinks').classList.toggle('open');}
+</script>
+</body>
+</html>

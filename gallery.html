@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Gallery — Collins Mungai</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root{--bg:#0a0a0f;--surface:#13131a;--accent:#e8ff4d;--accent2:#4dffd4;--text:#f0f0f0;--muted:#888;--border:rgba(255,255,255,0.07);}
+  [data-theme="light"]{--bg:#f5f5f0;--surface:#ebebE4;--text:#111;--muted:#666;--border:rgba(0,0,0,0.08);}
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 5vw;background:rgba(10,10,15,0.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;color:var(--accent);}
+  .nav-links{display:flex;gap:2rem;list-style:none;}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:0.9rem;font-weight:500;transition:color 0.2s;}
+  .nav-links a:hover{color:var(--text);}.nav-links a.active{color:var(--accent);}
+  .theme-toggle{background:none;border:1px solid var(--border);color:var(--text);padding:0.4rem 0.8rem;border-radius:20px;cursor:pointer;font-size:0.8rem;}
+  .theme-toggle:hover{border-color:var(--accent);color:var(--accent);}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+  .hamburger span{width:24px;height:2px;background:var(--text);}
+  @media(max-width:768px){.nav-links{display:none;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:var(--surface);padding:1rem 5vw;border-top:1px solid var(--border);}.nav-links.open{display:flex;}.hamburger{display:flex;}}
+
+  .page-wrapper{padding:9rem 5vw 6rem;max-width:1400px;margin:auto;}
+  .section-tag{display:inline-block;background:rgba(232,255,77,0.08);border:1px solid rgba(232,255,77,0.2);color:var(--accent);padding:0.3rem 0.8rem;border-radius:20px;font-size:0.8rem;margin-bottom:1rem;}
+  h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.5rem,5vw,4rem);letter-spacing:-0.04em;line-height:1.05;margin-bottom:0.8rem;}
+  .lead{color:var(--muted);font-size:1.05rem;line-height:1.7;max-width:560px;margin-bottom:3rem;}
+
+  .filter-bar{display:flex;gap:0.7rem;margin-bottom:3rem;flex-wrap:wrap;}
+  .filter-btn{padding:0.5rem 1.2rem;border-radius:30px;border:1px solid var(--border);background:none;color:var(--muted);cursor:pointer;font-size:0.85rem;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+  .filter-btn.active,.filter-btn:hover{border-color:var(--accent);color:var(--accent);}
+  .filter-btn.active{background:rgba(232,255,77,0.08);}
+
+  /* MASONRY GRID */
+  .gallery-grid{columns:4 260px;gap:1.2rem;}
+  .gallery-item{break-inside:avoid;margin-bottom:1.2rem;border-radius:14px;overflow:hidden;border:1px solid var(--border);cursor:pointer;position:relative;transition:transform 0.3s,box-shadow 0.3s;}
+  .gallery-item:hover{transform:scale(1.02);box-shadow:0 12px 40px rgba(0,0,0,0.4);border-color:rgba(232,255,77,0.3);}
+  .gallery-thumb{width:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;background:var(--surface);position:relative;}
+  .gallery-thumb.tall{height:280px;}
+  .gallery-thumb.medium{height:200px;}
+  .gallery-thumb.short{height:150px;}
+  .gallery-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,transparent 50%);opacity:0;transition:opacity 0.3s;display:flex;flex-direction:column;justify-content:flex-end;padding:1.2rem;}
+  .gallery-item:hover .gallery-overlay{opacity:1;}
+  .gallery-overlay-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#fff;margin-bottom:0.2rem;}
+  .gallery-overlay-type{font-size:0.75rem;color:var(--accent);font-weight:500;}
+
+  /* LIGHTBOX */
+  .lightbox{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.92);backdrop-filter:blur(16px);align-items:center;justify-content:center;padding:2rem;}
+  .lightbox.open{display:flex;}
+  .lightbox-content{background:var(--surface);border:1px solid var(--border);border-radius:20px;max-width:600px;width:100%;overflow:hidden;}
+  .lightbox-thumb{height:300px;display:flex;align-items:center;justify-content:center;font-size:6rem;background:linear-gradient(135deg,rgba(232,255,77,0.05),rgba(77,255,212,0.05));}
+  .lightbox-info{padding:2rem;}
+  .lightbox-info h3{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;margin-bottom:0.5rem;}
+  .lightbox-info p{color:var(--muted);font-size:0.9rem;line-height:1.6;margin-bottom:1rem;}
+  .lightbox-close{position:absolute;top:1.5rem;right:1.5rem;background:var(--surface);border:1px solid var(--border);color:var(--text);width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.2rem;transition:all 0.2s;}
+  .lightbox-close:hover{border-color:var(--accent);color:var(--accent);}
+
+  .bg-orb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;}
+  .orb1{width:600px;height:600px;background:rgba(232,255,77,0.04);top:-200px;right:-200px;}
+  .orb2{width:400px;height:400px;background:rgba(77,255,212,0.04);bottom:-100px;left:-100px;}
+
+  @media(max-width:600px){.gallery-grid{columns:2 150px;}}
+</style>
+</head>
+<body>
+<div class="bg-orb orb1"></div>
+<div class="bg-orb orb2"></div>
+<nav>
+  <div class="logo">CM.</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="gallery.html" class="active">Gallery</a></li>
+    <li><a href="testimonials.html">Reviews</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div style="display:flex;gap:1rem;align-items:center">
+    <button class="theme-toggle" onclick="toggleTheme()">☀ Light</button>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+  <div class="section-tag">Design Gallery</div>
+  <h1>Visual work</h1>
+  <p class="lead">Logos, branding, posters, social media graphics, and UI screens — a showcase of creative output.</p>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterGallery('all',this)">All</button>
+    <button class="filter-btn" onclick="filterGallery('logo',this)">Logos</button>
+    <button class="filter-btn" onclick="filterGallery('poster',this)">Posters</button>
+    <button class="filter-btn" onclick="filterGallery('social',this)">Social Media</button>
+    <button class="filter-btn" onclick="filterGallery('ui',this)">UI Screens</button>
+    <button class="filter-btn" onclick="filterGallery('brand',this)">Branding</button>
+  </div>
+
+  <div class="gallery-grid" id="galleryGrid">
+    <div class="gallery-item" data-category="logo" onclick="openLightbox('🦁','Apex Brand Logo','Full wordmark + icon lockup designed for a fitness brand. Includes primary, secondary, and icon-only variants.','Logo Design · Illustrator')">
+      <div class="gallery-thumb tall" style="background:linear-gradient(135deg,#1a0010,#3d0020)">🦁</div>
+      <div class="gallery-overlay"><div class="gallery-overlay-title">Apex Brand Logo</div><div class="gallery-overlay-type">Logo Design</div></div>
+    </div>
+    <div class="gallery-item" data-category="poster" onclick="openLightbox('🎵','Music Event Poster','Concert poster design with layered typography, bold color contrasts, and custom illustration elements.','Poster Design · Photoshop')">
+      <div class="gallery-thumb medium" style="background:linear-gradient(135deg,#0a0020,#1a003d)">🎵</div>
+      <div class="gallery-overlay"><div class="gallery-overlay-title">Music Event Poster</div><div class="gallery-overlay-type">Poster Design</div></div>
+    </div>
+    <div class="gallery-item" data-category="social" onclick="openLightbox('📸','Instagram Post Set','A set of 9-grid Instagram posts for a fashion brand featuring product photography layouts and consistent visual language.','Social Media · Photoshop')">
+      <div class="gallery-thumb short" style="background:linear-gradient(135deg,#1a0a00,#3d1500)">📸</div>
+      <div class="gallery-overlay"><div class="gallery-overlay-title">Instagram Post Set</div><div class="gallery-overlay-type">Social Media</div></div>
+    </div>
+    <div class="gallery-item" data-category="ui" onclick="openLightbox('💳','Finance App Screens','Dashboard, portfolio, and transaction screens for a personal finance mobile app designed in Figma.','UI Design · Figma')">
+      <div class="gallery-thumb tall" style="background:linear-gradient(135deg,#001a1a,#003d3d)">💳</div>
+      <div class="gallery-overlay"><div class="gallery-overlay-title">Finance App Screens</div><div class="gallery-overlay-type">UI/UX Design</div></div>
+    </div>
+    <div class="gallery-item" data-category="brand" onclick="openLightbox('☕','Brew Co. Branding','Full brand identity for a specialty coffee shop — logo, color palette, typography, packaging and stationery mockups.','Branding · Illustrator + Photoshop')">
+      <div class="gallery-thumb medium" style="background:linear-gradient(135deg,#1a0d00,#3d1f00)">☕</div>
+      <div class="gallery-overlay"><div class="gallery-overlay-title">Brew Co. Branding</div><div class="gallery-overlay-type">Brand Identity</div></div>
+    </div>
+    <div class="gallery-item" data-category="logo" onclick="openLightbox('⚡','Volt Tech Logo','Minimalist icon-based logo for a tech startup. Clean vector forms with a strong scalable mark.','Logo Design · Illustrator')">
+      <div class="gallery-thumb short" style="background:linear-gradient(135deg,#0a1a00,#1a3d00)">⚡</div>
+      <div class="gallery-overlay"><div class="gallery-overlay-title">Volt Tech Logo</div><div class="gallery-overlay-type">Logo Design</div></div>
+    </div>
+    <div class="gallery-item" data-category="poster" onclick="openLightbox('🌍','NGO Campaign Poster','Awareness poster design for an environmental NGO — bold typography, impactful imagery, print-ready output.','Poster · Photoshop + Illustrator')">
+      <div class="gallery-thumb medium" style="background:linear-gradient(135deg,#001a07,#003d18)">🌍</div>
+      <div class="gallery-overlay"><div class="gallery-overlay-title">NGO Campaign Poster</div><div class="gallery-overlay-type">Poster Design</div></div>
+    </div>
+    <div class="gallery-item" data-category="social" onclick="openLightbox('🏋','Fitness Brand Social Kit','Social media kit including story templates, post layouts, highlights covers, and carousel templates for a gym brand.','Social Media Kit · Figma')">
+      <div class="gallery-thumb tall" style="background:linear-gradient(135deg,#1a001a,#2d003d)">🏋</div>
+      <div class="gallery-overlay"><div class="gallery-overlay-title">Fitness Brand Social Kit</div><div class="gallery-overlay-type">Social Media Kit</div></div>
+    </div>
+    <div class="gallery-item" data-category="ui" onclick="openLightbox('🛒','E-Commerce UI Screens','Product listing, cart, and checkout screens for a fashion e-commerce app with a clean editorial aesthetic.','UI Design · Figma')">
+      <div class="gallery-thumb medium" style="background:linear-gradient(135deg,#1a1a00,#2d2d00)">🛒</div>
+      <div class="gallery-overlay"><div class="gallery-overlay-title">E-Commerce UI Screens</div><div class="gallery-overlay-type">UI Design</div></div>
+    </div>
+    <div class="gallery-item" data-category="brand" onclick="openLightbox('🌿','Verde Natural Branding','Organic skincare brand identity featuring earthy tones, hand-drawn elements, and sustainable packaging design.','Branding · Illustrator')">
+      <div class="gallery-thumb short" style="background:linear-gradient(135deg,#041a0a,#0a3d18)">🌿</div>
+      <div class="gallery-overlay"><div class="gallery-overlay-title">Verde Natural Branding</div><div class="gallery-overlay-type">Brand Identity</div></div>
+    </div>
+    <div class="gallery-item" data-category="logo" onclick="openLightbox('🏗','BuildRight Construction','Strong, geometric logo for a construction company conveying reliability, precision, and professionalism.','Logo Design · Illustrator')">
+      <div class="gallery-thumb medium" style="background:linear-gradient(135deg,#1a0f00,#3d2200)">🏗</div>
+      <div class="gallery-overlay"><div class="gallery-overlay-title">BuildRight Logo</div><div class="gallery-overlay-type">Logo Design</div></div>
+    </div>
+    <div class="gallery-item" data-category="poster" onclick="openLightbox('🎤','Speaker Event Flyer','Event flyer for a business summit — professional layout, headshots integration, and branded color treatment.','Flyer Design · Photoshop')">
+      <div class="gallery-thumb short" style="background:linear-gradient(135deg,#00101a,#00253d)">🎤</div>
+      <div class="gallery-overlay"><div class="gallery-overlay-title">Speaker Event Flyer</div><div class="gallery-overlay-type">Event Flyer</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightboxOutside(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">×</button>
+  <div class="lightbox-content">
+    <div class="lightbox-thumb" id="lbThumb"></div>
+    <div class="lightbox-info">
+      <h3 id="lbTitle"></h3>
+      <p id="lbDesc"></p>
+      <span style="font-size:0.8rem;color:var(--accent)" id="lbType"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+  function filterGallery(cat,el){
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    el.classList.add('active');
+    document.querySelectorAll('.gallery-item').forEach(item=>{
+      if(cat==='all'||item.dataset.category===cat){item.style.display='block';}
+      else{item.style.display='none';}
+    });
+  }
+  function openLightbox(icon,title,desc,type){
+    document.getElementById('lbThumb').textContent=icon;
+    document.getElementById('lbTitle').textContent=title;
+    document.getElementById('lbDesc').textContent=desc;
+    document.getElementById('lbType').textContent=type;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  function closeLightbox(){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}
+  function closeLightboxOutside(e){if(e.target.id==='lightbox')closeLightbox();}
+  function toggleTheme(){const b=document.body,btn=document.querySelector('.theme-toggle');if(b.dataset.theme==='light'){delete b.dataset.theme;btn.textContent='☀ Light';}else{b.dataset.theme='light';btn.textContent='🌙 Dark';}}
+  function toggleMenu(){document.getElementById('navLinks').classList.toggle('open');}
+</script>
+</body>
+</html>

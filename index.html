@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Collins Mungai — Front-End Developer & Graphics Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --accent: #e8ff4d;
+    --accent2: #4dffd4;
+    --text: #f0f0f0;
+    --muted: #888;
+    --border: rgba(255,255,255,0.07);
+  }
+  [data-theme="light"] {
+    --bg: #f5f5f0;
+    --surface: #ebebE4;
+    --text: #111;
+    --muted: #666;
+    --border: rgba(0,0,0,0.08);
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 5vw;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--accent); letter-spacing: -0.03em; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a.active { color: var(--accent); }
+  .theme-toggle {
+    background: none; border: 1px solid var(--border);
+    color: var(--text); padding: 0.4rem 0.8rem; border-radius: 20px;
+    cursor: pointer; font-size: 0.8rem; transition: all 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 2px; background: var(--text); transition: all 0.3s; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 7rem 5vw 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+    width: 100%;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(232,255,77,0.08); border: 1px solid rgba(232,255,77,0.2);
+    color: var(--accent); padding: 0.35rem 0.9rem; border-radius: 20px;
+    font-size: 0.8rem; font-weight: 500; margin-bottom: 1.5rem;
+    animation: fadeInUp 0.6s ease both;
+  }
+  .hero-badge::before { content: ''; width: 7px; height: 7px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.4)} }
+  @keyframes fadeInUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+  h1 {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    line-height: 1.0; letter-spacing: -0.04em;
+    animation: fadeInUp 0.7s 0.1s ease both;
+  }
+  h1 .highlight { color: var(--accent); display: block; }
+  .hero-title {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--accent2); font-weight: 500; margin: 1rem 0 0.8rem;
+    animation: fadeInUp 0.7s 0.2s ease both;
+  }
+  .hero-tagline {
+    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+    color: var(--muted); line-height: 1.7; max-width: 480px;
+    animation: fadeInUp 0.7s 0.3s ease both;
+  }
+  .hero-cta {
+    display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2.5rem;
+    animation: fadeInUp 0.7s 0.4s ease both;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.85rem 1.8rem; border-radius: 6px; font-size: 0.92rem;
+    font-weight: 600; text-decoration: none; cursor: pointer; border: none;
+    transition: all 0.25s ease; font-family: 'DM Sans', sans-serif;
+  }
+  .btn-primary { background: var(--accent); color: #0a0a0f; }
+  .btn-primary:hover { background: #d4e840; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,255,77,0.3); }
+  .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+  .btn-outline:hover { border-color: var(--accent2); color: var(--accent2); transform: translateY(-2px); }
+  .btn-ghost { background: rgba(77,255,212,0.08); color: var(--accent2); border: 1px solid rgba(77,255,212,0.2); }
+  .btn-ghost:hover { background: rgba(77,255,212,0.15); transform: translateY(-2px); }
+
+  /* Avatar */
+  .hero-visual {
+    display: flex; justify-content: center; align-items: center;
+    animation: fadeIn 1s 0.5s ease both;
+    position: relative;
+  }
+  .avatar-ring {
+    width: clamp(260px, 35vw, 420px);
+    height: clamp(260px, 35vw, 420px);
+    border-radius: 50%;
+    background: conic-gradient(var(--accent) 0%, var(--accent2) 40%, transparent 70%);
+    padding: 3px;
+    animation: spin 8s linear infinite;
+  }
+  @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+  .avatar-inner {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    background: var(--surface);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-size: clamp(4rem, 8vw, 8rem);
+    font-weight: 800; color: var(--accent);
+    animation: spin 8s linear infinite reverse;
+  }
+  .floating-tags {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+  .tag {
+    position: absolute; background: var(--surface); border: 1px solid var(--border);
+    padding: 0.4rem 0.9rem; border-radius: 20px; font-size: 0.78rem;
+    color: var(--muted); white-space: nowrap;
+    animation: float 4s ease-in-out infinite;
+  }
+  .tag:nth-child(1){ top: 5%; left: -8%; animation-delay: 0s; }
+  .tag:nth-child(2){ top: 20%; right: -5%; animation-delay: 0.8s; }
+  .tag:nth-child(3){ bottom: 25%; left: -10%; animation-delay: 1.6s; }
+  .tag:nth-child(4){ bottom: 8%; right: 0%; animation-delay: 2.4s; }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+  /* STATS */
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 2.5rem;
+    animation: fadeInUp 0.7s 0.5s ease both;
+  }
+  .stat-item { text-align: left; }
+  .stat-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2rem; color: var(--accent); line-height: 1; }
+  .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
+
+  /* BG DECORATION */
+  .bg-orb {
+    position: fixed; border-radius: 50%; filter: blur(100px); pointer-events: none; z-index: 0;
+  }
+  .orb1 { width: 600px; height: 600px; background: rgba(232,255,77,0.04); top: -200px; right: -200px; }
+  .orb2 { width: 400px; height: 400px; background: rgba(77,255,212,0.04); bottom: -100px; left: -100px; }
+
+  /* SCROLL INDICATOR */
+  .scroll-hint {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    color: var(--muted); font-size: 0.75rem; animation: fadeIn 2s 1s ease both;
+  }
+  .scroll-line {
+    width: 1px; height: 50px; background: linear-gradient(to bottom, var(--muted), transparent);
+    animation: scrollPulse 2s ease infinite;
+  }
+  @keyframes scrollPulse { 0%,100%{opacity:0.4;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.2)} }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
+    .hero-visual { order: -1; }
+    .hero-tagline { max-width: 100%; }
+    .hero-cta { justify-content: center; }
+    .hero-stats { justify-content: center; }
+    .floating-tags { display: none; }
+    .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--surface); padding: 1rem 5vw; border-top: 1px solid var(--border); }
+    .nav-links.open { display: flex; }
+    .hamburger { display: flex; }
+  }
+</style>
+</head>
+<body>
+<div class="bg-orb orb1"></div>
+<div class="bg-orb orb2"></div>
+
+<nav>
+  <div class="logo">CM.</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="testimonials.html">Reviews</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div style="display:flex;gap:1rem;align-items:center">
+    <button class="theme-toggle" onclick="toggleTheme()">☀ Light</button>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-content">
+      <div class="hero-badge">Available for freelance work</div>
+      <h1>Collins<span class="highlight">Mungai</span></h1>
+      <p class="hero-title">Front-End Developer & Graphics Designer</p>
+      <p class="hero-tagline">I build visually stunning, responsive, and user-focused digital experiences that leave lasting impressions.</p>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">3+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">40+</div>
+          <div class="stat-label">Projects Done</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">20+</div>
+          <div class="stat-label">Happy Clients</div>
+        </div>
+      </div>
+      <div class="hero-cta">
+        <a href="projects.html" class="btn btn-primary">View My Work →</a>
+        <a href="contact.html" class="btn btn-outline">Contact Me</a>
+        <a href="#" class="btn btn-ghost" onclick="alert('CV download coming soon!')">↓ Download CV</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="floating-tags">
+        <div class="tag">⚛ React</div>
+        <div class="tag">🎨 Figma</div>
+        <div class="tag">✦ UI/UX</div>
+        <div class="tag">🖥 HTML/CSS</div>
+      </div>
+      <div class="avatar-ring">
+        <div class="avatar-inner">CM</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<script>
+  function toggleTheme() {
+    const body = document.body;
+    const btn = document.querySelector('.theme-toggle');
+    if(body.dataset.theme === 'light') {
+      delete body.dataset.theme;
+      btn.textContent = '☀ Light';
+    } else {
+      body.dataset.theme = 'light';
+      btn.textContent = '🌙 Dark';
+    }
+  }
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Testimonials — Collins Mungai</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root{--bg:#0a0a0f;--surface:#13131a;--accent:#e8ff4d;--accent2:#4dffd4;--text:#f0f0f0;--muted:#888;--border:rgba(255,255,255,0.07);}
+  [data-theme="light"]{--bg:#f5f5f0;--surface:#ebebE4;--text:#111;--muted:#666;--border:rgba(0,0,0,0.08);}
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 5vw;background:rgba(10,10,15,0.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;color:var(--accent);}
+  .nav-links{display:flex;gap:2rem;list-style:none;}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:0.9rem;font-weight:500;transition:color 0.2s;}
+  .nav-links a:hover{color:var(--text);}.nav-links a.active{color:var(--accent);}
+  .theme-toggle{background:none;border:1px solid var(--border);color:var(--text);padding:0.4rem 0.8rem;border-radius:20px;cursor:pointer;font-size:0.8rem;}
+  .theme-toggle:hover{border-color:var(--accent);color:var(--accent);}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+  .hamburger span{width:24px;height:2px;background:var(--text);}
+  @media(max-width:768px){.nav-links{display:none;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:var(--surface);padding:1rem 5vw;border-top:1px solid var(--border);}.nav-links.open{display:flex;}.hamburger{display:flex;}}
+
+  .page-wrapper{padding:9rem 5vw 6rem;max-width:1200px;margin:auto;}
+  .section-tag{display:inline-block;background:rgba(232,255,77,0.08);border:1px solid rgba(232,255,77,0.2);color:var(--accent);padding:0.3rem 0.8rem;border-radius:20px;font-size:0.8rem;margin-bottom:1rem;}
+  h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.5rem,5vw,4rem);letter-spacing:-0.04em;line-height:1.05;margin-bottom:0.8rem;}
+  .lead{color:var(--muted);font-size:1.05rem;line-height:1.7;max-width:560px;margin-bottom:4rem;}
+
+  /* STATS BAR */
+  .stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-bottom:4rem;}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem;text-align:center;}
+  .stat-num{font-family:'Syne',sans-serif;font-weight:800;font-size:2.4rem;color:var(--accent);line-height:1;}
+  .stat-label{font-size:0.82rem;color:var(--muted);margin-top:0.4rem;}
+
+  /* TESTIMONIALS GRID */
+  .testimonials-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.8rem;margin-bottom:5rem;}
+  .testimonial-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:2rem;position:relative;transition:all 0.3s;}
+  .testimonial-card:hover{border-color:rgba(232,255,77,0.3);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.3);}
+  .testimonial-card.featured{border-color:rgba(232,255,77,0.25);background:linear-gradient(135deg,var(--surface),rgba(232,255,77,0.03));}
+  .quote-mark{font-family:'Syne',sans-serif;font-size:4rem;color:var(--accent);line-height:0.8;margin-bottom:1rem;opacity:0.6;}
+  .testimonial-text{color:var(--text);font-size:0.95rem;line-height:1.8;margin-bottom:1.5rem;font-style:italic;}
+  .testimonial-stars{color:var(--accent);font-size:0.9rem;margin-bottom:1.2rem;letter-spacing:2px;}
+  .testimonial-author{display:flex;align-items:center;gap:1rem;}
+  .author-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:#0a0a0f;flex-shrink:0;}
+  .author-name{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;}
+  .author-role{font-size:0.8rem;color:var(--muted);}
+  .featured-badge{position:absolute;top:1.2rem;right:1.2rem;background:rgba(232,255,77,0.12);border:1px solid rgba(232,255,77,0.3);color:var(--accent);padding:0.2rem 0.7rem;border-radius:20px;font-size:0.72rem;font-weight:600;}
+
+  /* SERVICES SECTION */
+  .services-section{margin-top:2rem;}
+  .services-section h2{font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;letter-spacing:-0.03em;margin-bottom:0.8rem;}
+  .services-section .sub{color:var(--muted);font-size:0.95rem;margin-bottom:2.5rem;}
+  .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem;}
+  .service-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.8rem;transition:all 0.25s;}
+  .service-card:hover{border-color:var(--accent2);transform:translateY(-3px);}
+  .service-icon{font-size:2rem;margin-bottom:1rem;}
+  .service-name{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:0.4rem;}
+  .service-desc{font-size:0.85rem;color:var(--muted);line-height:1.6;}
+  .service-price{margin-top:0.8rem;font-size:0.82rem;color:var(--accent);font-weight:600;}
+
+  .bg-orb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;}
+  .orb1{width:600px;height:600px;background:rgba(232,255,77,0.04);top:-200px;right:-200px;}
+  .orb2{width:400px;height:400px;background:rgba(77,255,212,0.04);bottom:-100px;left:-100px;}
+
+  @media(max-width:768px){.stats-bar{grid-template-columns:1fr 1fr;}}
+  @media(max-width:480px){.stats-bar{grid-template-columns:1fr 1fr;}.testimonials-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="bg-orb orb1"></div>
+<div class="bg-orb orb2"></div>
+<nav>
+  <div class="logo">CM.</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="testimonials.html" class="active">Reviews</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div style="display:flex;gap:1rem;align-items:center">
+    <button class="theme-toggle" onclick="toggleTheme()">☀ Light</button>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+  <div class="section-tag">Testimonials & Services</div>
+  <h1>What clients say</h1>
+  <p class="lead">Real words from real people I've had the pleasure of working with.</p>
+
+  <div class="stats-bar">
+    <div class="stat-card"><div class="stat-num">5.0</div><div class="stat-label">Average Rating</div></div>
+    <div class="stat-card"><div class="stat-num">20+</div><div class="stat-label">Happy Clients</div></div>
+    <div class="stat-card"><div class="stat-num">40+</div><div class="stat-label">Projects Done</div></div>
+    <div class="stat-card"><div class="stat-num">100%</div><div class="stat-label">Satisfaction Rate</div></div>
+  </div>
+
+  <div class="testimonials-grid">
+    <div class="testimonial-card featured">
+      <div class="featured-badge">✦ Featured</div>
+      <div class="quote-mark">"</div>
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">Collins completely transformed our online presence. The website he built is not just beautiful — it converts. Our leads increased by 40% in the first month. He understood our brand vision immediately and delivered beyond expectations.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">AM</div>
+        <div><div class="author-name">Amina Mwangi</div><div class="author-role">CEO, Zuri Digital Agency</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="quote-mark">"</div>
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">The branding Collins created for us is absolutely stunning. He captured exactly what we were looking for — modern, clean, and memorable. We've received countless compliments from clients on our new look.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">JK</div>
+        <div><div class="author-name">James Kariuki</div><div class="author-role">Founder, Brew Masters Kenya</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="quote-mark">"</div>
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">Working with Collins was a seamless experience. He's responsive, professional, and brings creative solutions to the table. The React dashboard he built for us is fast, intuitive, and our users love it.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">FO</div>
+        <div><div class="author-name">Faith Otieno</div><div class="author-role">Product Manager, Techbridge Solutions</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="quote-mark">"</div>
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">Collins designed our social media graphics and they completely changed how we show up online. Engagement went through the roof. His eye for aesthetics and understanding of our audience is top-notch.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">SM</div>
+        <div><div class="author-name">Sharon Mutua</div><div class="author-role">Marketing Director, NovaBrand</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="quote-mark">"</div>
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">He delivered our landing page in record time without sacrificing quality. Every section was pixel-perfect and the performance scores were excellent. We'll definitely be coming back for future projects.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">DK</div>
+        <div><div class="author-name">David Kimani</div><div class="author-role">Co-Founder, SkyLaunch Startups</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="quote-mark">"</div>
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">Collins is a rare find — someone who truly understands both design and code. Our app UI was designed with such care and precision. He also coded the front-end and the handover was smooth and well-documented.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">RN</div>
+        <div><div class="author-name">Ruth Njeri</div><div class="author-role">CTO, PayEasy Africa</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <div class="services-section">
+    <h2>What I offer</h2>
+    <p class="sub">Professional services to help your business grow online.</p>
+    <div class="services-grid">
+      <div class="service-card"><div class="service-icon">🌐</div><div class="service-name">Website Design & Development</div><div class="service-desc">Custom, responsive websites built from scratch with clean code and stunning design.</div><div class="service-price">Starting from KES 15,000</div></div>
+      <div class="service-card"><div class="service-icon">⚛</div><div class="service-name">Front-End Development</div><div class="service-desc">React, HTML/CSS/JS, Tailwind — fast, accessible, and performant web interfaces.</div><div class="service-price">Starting from KES 12,000</div></div>
+      <div class="service-card"><div class="service-icon">🖌</div><div class="service-name">UI/UX Design</div><div class="service-desc">User-centered interface design in Figma with wireframes, prototypes, and design systems.</div><div class="service-price">Starting from KES 8,000</div></div>
+      <div class="service-card"><div class="service-icon">🏷</div><div class="service-name">Branding & Logo Design</div><div class="service-desc">Complete brand identity packages — logo, colors, fonts, and brand guidelines.</div><div class="service-price">Starting from KES 6,000</div></div>
+      <div class="service-card"><div class="service-icon">📱</div><div class="service-name">Social Media Graphics</div><div class="service-desc">Scroll-stopping posts, stories, and banners for all major social platforms.</div><div class="service-price">Starting from KES 3,000</div></div>
+      <div class="service-card"><div class="service-icon">🚀</div><div class="service-name">Landing Pages</div><div class="service-desc">High-converting, fast-loading landing pages optimized for your marketing campaigns.</div><div class="service-price">Starting from KES 10,000</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleTheme(){const b=document.body,btn=document.querySelector('.theme-toggle');if(b.dataset.theme==='light'){delete b.dataset.theme;btn.textContent='☀ Light';}else{b.dataset.theme='light';btn.textContent='🌙 Dark';}}
+  function toggleMenu(){document.getElementById('navLinks').classList.toggle('open');}
+</script>
+</body>
+</html>
